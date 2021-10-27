@@ -1,11 +1,13 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://debug/playground/playground.gd" type="Script" id=1]
 [ext_resource path="res://debug/target/target.tscn" type="PackedScene" id=2]
 [ext_resource path="res://spaceship/spaceship.tscn" type="PackedScene" id=3]
+[ext_resource path="res://debug/supply/supply.tscn" type="PackedScene" id=4]
 
 [node name="Playground" type="Node2D"]
 script = ExtResource( 1 )
+Supply = ExtResource( 4 )
 
 [node name="Target" parent="." instance=ExtResource( 2 )]
 position = Vector2( 261.933, 227.942 )

@@ -13,6 +13,16 @@ config_version=4
 config/name="Spaceship-Simulation"
 config/icon="res://icon.png"
 
+[global]
+
+physi=false
+
+[layer_names]
+
+2d_physics/layer_1="Spaceship"
+2d_physics/layer_2="Radar"
+2d_physics/layer_3="Supply"
+
 [physics]
 
 common/enable_pause_aware_picking=true
