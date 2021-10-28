@@ -1,16 +1,21 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Assets/simple-space/ship_A.png" type="Texture" id=1]
 [ext_resource path="res://spaceship/spaceship.gd" type="Script" id=2]
+[ext_resource path="res://pheromone/resources-pheromone.tscn" type="PackedScene" id=3]
+[ext_resource path="res://pheromone/home-pheromone.tscn" type="PackedScene" id=4]
+[ext_resource path="res://spaceship/sensor.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 100.0
+radius = 128.0
 
 [node name="Spaceship" type="KinematicBody2D"]
 script = ExtResource( 2 )
+resources_pheromone_scene = ExtResource( 3 )
+home_pheromone_scene = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -25,3 +30,18 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Radar"]
 shape = SubResource( 2 )
+
+[node name="PheromoneTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="LeftSensor" parent="." instance=ExtResource( 5 )]
+position = Vector2( 0, -32 )
+
+[node name="CentreSensor" parent="." instance=ExtResource( 5 )]
+position = Vector2( 64, 0 )
+
+[node name="RightSensor" parent="." instance=ExtResource( 5 )]
+position = Vector2( 0, 32 )
+
+[connection signal="timeout" from="PheromoneTimer" to="." method="_on_PheromoneTimer_timeout"]

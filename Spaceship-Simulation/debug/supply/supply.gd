@@ -1,7 +1,9 @@
 extends RigidBody2D
+class_name Supply
+
 export (int) var resources : int = 10
 
-func collect_resources(quantity : int):
+func collect_resources(quantity : int) -> int:
 	if resources > quantity:
 		resources -= quantity
 		return quantity

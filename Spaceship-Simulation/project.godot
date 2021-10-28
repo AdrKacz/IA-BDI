@@ -8,6 +8,34 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Area2D",
+"class": "Pheromone",
+"language": "GDScript",
+"path": "res://pheromone/pheromone.gd"
+}, {
+"base": "Area2D",
+"class": "Sensor",
+"language": "GDScript",
+"path": "res://spaceship/sensor.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Spaceship",
+"language": "GDScript",
+"path": "res://spaceship/spaceship.gd"
+}, {
+"base": "RigidBody2D",
+"class": "Supply",
+"language": "GDScript",
+"path": "res://debug/supply/supply.gd"
+} ]
+_global_script_class_icons={
+"Pheromone": "",
+"Sensor": "",
+"Spaceship": "",
+"Supply": ""
+}
+
 [application]
 
 config/name="Spaceship-Simulation"
