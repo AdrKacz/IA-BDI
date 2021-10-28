@@ -5,6 +5,9 @@ export (PackedScene) var Supply : PackedScene
 var _dragging = false
 var _click_radius = 32
 
+#func _process(_delta):
+#	$Spaceship._target = $Target.position
+
 func _input(event : InputEvent):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
 		if (event.position - $Target.position).length() < _click_radius:

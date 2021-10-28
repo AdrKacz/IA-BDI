@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Assets/simple-space/star_tiny.png" type="Texture" id=1]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 8.0
+
+[node name="HomePheromone" type="Area2D"]
+modulate = Color( 1, 0, 0, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -0.0703125, 0.015625 )
+shape = SubResource( 1 )
+
+[node name="star_tiny" type="Sprite" parent="."]
+texture = ExtResource( 1 )

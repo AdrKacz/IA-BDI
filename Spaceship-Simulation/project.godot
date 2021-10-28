@@ -22,6 +22,8 @@ physi=false
 2d_physics/layer_1="Spaceship"
 2d_physics/layer_2="Radar"
 2d_physics/layer_3="Supply"
+2d_physics/layer_4="Home Pheromone"
+2d_physics/layer_5="Resources Pheromone"
 
 [physics]
 
