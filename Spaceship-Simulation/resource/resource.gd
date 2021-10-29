@@ -4,6 +4,9 @@ export (int) var resources : int = 1
 
 var _will_queue_free : bool = false
 
+func _ready():
+	$icon_plusSmall.modulate = Constants.normal_color
+
 func collect_resources(quantity : int) -> int:
 	if resources > quantity:
 		resources -= quantity

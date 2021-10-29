@@ -51,9 +51,9 @@ func handle_pheromone_steering() -> void:
 func _change_state():
 	_is_looking_for_resources = not _is_looking_for_resources
 	if _is_looking_for_resources:
-		$ship_A.modulate.g = 1
+		$ship_A.modulate = Constants.normal_color
 	else:
-		$ship_A.modulate.g = 0.5
+		$ship_A.modulate = Constants.action_color
 	_desired_direction = -transform.x
 
 func handle_target() -> void:

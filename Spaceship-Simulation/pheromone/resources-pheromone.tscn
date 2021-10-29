@@ -7,7 +7,7 @@
 radius = 8.0
 
 [node name="ResourcesPheromone" type="Area2D"]
-modulate = Color( 0.913725, 0.254902, 0.101961, 1 )
+modulate = Color( 0.901961, 0.223529, 0.27451, 1 )
 collision_layer = 16
 collision_mask = 0
 script = ExtResource( 2 )

@@ -23,6 +23,7 @@ home_pheromone_scene = ExtResource( 4 )
 shape = SubResource( 1 )
 
 [node name="ship_A" type="Sprite" parent="."]
+modulate = Color( 0.945098, 0.980392, 0.933333, 1 )
 rotation = 1.5708
 texture = ExtResource( 1 )
 
@@ -40,11 +41,14 @@ autostart = true
 
 [node name="Left" parent="Sensors" instance=ExtResource( 5 )]
 position = Vector2( 34, -34 )
+rotation = 0.785398
 
 [node name="Centre" parent="Sensors" instance=ExtResource( 5 )]
 position = Vector2( 48, 0 )
+rotation = 1.5708
 
 [node name="Right" parent="Sensors" instance=ExtResource( 5 )]
 position = Vector2( 34, 34 )
+rotation = 2.35619
 
 [connection signal="timeout" from="PheromoneTimer" to="." method="_on_PheromoneTimer_timeout"]
