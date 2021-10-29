@@ -1,12 +1,18 @@
 extends Area2D
+signal resources(number_of_resources)
 
 export (PackedScene) var spaceship_scene : PackedScene
 
+var _resources : int = 0
 var _random : RandomNumberGenerator
 
 func _ready() -> void:
 	_random = RandomNumberGenerator.new()
 	_random.randomize()
+	
+func retrieve_resource() -> void:
+	_resources += 1
+	emit_signal("resources", _resources)
 	
 func get_spaceship_at_random():
 	var inside_unit_circle : Vector2 = Vector2(_random.randf_range(-1, 1), _random.randf_range(-1, 1)).clamped(1)

@@ -1,7 +1,7 @@
 extends Area2D
 class_name Pheromone
 
-export (float) var evaporation_time : float = 50
+export (float) var evaporation_time : float = 16
 
 var lifetime : float = 0
 

@@ -14,7 +14,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://pheromone/pheromone.gd"
 }, {
-"base": "Area2D",
+"base": "Node2D",
 "class": "Sensor",
 "language": "GDScript",
 "path": "res://spaceship/sensor.gd"
@@ -23,17 +23,11 @@ _global_script_classes=[ {
 "class": "Spaceship",
 "language": "GDScript",
 "path": "res://spaceship/spaceship.gd"
-}, {
-"base": "RigidBody2D",
-"class": "Supply",
-"language": "GDScript",
-"path": "res://debug/supply/supply.gd"
 } ]
 _global_script_class_icons={
 "Pheromone": "",
 "Sensor": "",
-"Spaceship": "",
-"Supply": ""
+"Spaceship": ""
 }
 
 [application]
@@ -49,7 +43,7 @@ physi=false
 
 2d_physics/layer_1="Spaceship"
 2d_physics/layer_2="Radar"
-2d_physics/layer_3="Supply"
+2d_physics/layer_3="Object"
 2d_physics/layer_4="Home Pheromone"
 2d_physics/layer_5="Resources Pheromone"
 

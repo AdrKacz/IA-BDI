@@ -1,12 +1,38 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://debug/playground/playground.gd" type="Script" id=1]
-[ext_resource path="res://base/base.tscn" type="PackedScene" id=2]
-[ext_resource path="res://debug/supply/supply.tscn" type="PackedScene" id=4]
+[ext_resource path="res://home/home.tscn" type="PackedScene" id=2]
+[ext_resource path="res://source/source.tscn" type="PackedScene" id=3]
+[ext_resource path="res://resource/resource.tscn" type="PackedScene" id=4]
+[ext_resource path="res://hud/hud.tscn" type="PackedScene" id=5]
 
 [node name="Playground" type="Node2D"]
 script = ExtResource( 1 )
-supply_scene = ExtResource( 4 )
+resource_scene = ExtResource( 4 )
+
+[node name="HUD" parent="." instance=ExtResource( 5 )]
 
 [node name="Base" parent="." instance=ExtResource( 2 )]
-position = Vector2( 494.356, 282.463 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 2, 2 )
+
+[node name="Sources" type="Node" parent="."]
+
+[node name="Source1" parent="Sources" instance=ExtResource( 3 )]
+position = Vector2( 283.531, 158.369 )
+
+[node name="Source2" parent="Sources" instance=ExtResource( 3 )]
+position = Vector2( 658.932, -403.086 )
+
+[node name="Source3" parent="Sources" instance=ExtResource( 3 )]
+position = Vector2( -692.841, -332.287 )
+
+[node name="Source4" parent="Sources" instance=ExtResource( 3 )]
+position = Vector2( -491.969, 347.716 )
+
+[node name="Source5" parent="Sources" instance=ExtResource( 3 )]
+position = Vector2( 6.91968, -289.478 )
+
+[connection signal="resources" from="Base" to="." method="_on_Base_resources"]

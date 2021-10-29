@@ -4,10 +4,10 @@
 [ext_resource path="res://pheromone/pheromone.gd" type="Script" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 16.0
+radius = 8.0
 
 [node name="HomePheromone" type="Area2D"]
-modulate = Color( 1, 0, 0, 1 )
+modulate = Color( 0.0470588, 0.631373, 0.945098, 1 )
 collision_layer = 8
 collision_mask = 0
 script = ExtResource( 2 )
