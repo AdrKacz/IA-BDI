@@ -11,7 +11,7 @@ Resources are gather by lot in space.
 
 Go to [itch - Spaceship Simulation](https://adrkacz.itch.io/spaceship-simulation), and click **Run project**.
 
-*There is a space under the project to let you write any suggestion you can have.*
+*You can write any suggestion you have below the project.*
 
 ### I want to edit and run the project
 
@@ -34,10 +34,45 @@ You can release **spaceships** to go look for near by resources.
 
 However, spaceships don't have an efficient radar, and pilots only see what is **not too far and in front** of them.
 
-To help them in their quest, pilots can release **two types of markers** in space while flying. These markers evaporate and **lose visibility over time**.
+To help them in their quest, pilots can release **markers** in space while flying. These markers evaporate and **lose visibility over time**.
 
 Once they leaved their home, pilots have **no idea where they are**, and how to find back their home.
 
 **Space is great and dark.**
 
 *Good luck!*
+
+## Spaceship strategy
+
+Spaceship will wander until it finds a target. If it doesn't carry a resource it will look for a **resource** and if it carries a resource it will look for its **home**.
+
+While leaving its home, spaceship will release *blue markers*, to indicate the way back home.
+
+After having found a resource, spaceship will release *red markers*, to indicate where resources are.
+
+Spaceship has six sensors in front of it to measure the concentration of markers. Three *blue sensors* are for *blue markers* and three *red sensors* are for *red markers*.
+
+The *blue sensors* and *red sensors* are laid out the same. One to the left at **-45°**, one just in front at **0°**, and one to the right at **+45°**.
+
+Based on the value measured with its sensors, spaceship will change its `_desired_direction`.
+
+`_desired_direction` is the direction spaceship try to move in, the movement with acceleration and steering.
+
+```py
+func _physics_process(delta : float) -> void:
+  # ...
+  # Assign _desired_direction
+  # ...
+
+  # Movement
+  var desired_velocity : Vector2 = _desired_direction * max_speed
+  var desired_streering_force : Vector2 = (desired_velocity - _velocity) * steer_strength
+  var acceleration : Vector2 = desired_streering_force.clamped(steer_strength) / 1
+
+  _velocity = (_velocity + acceleration * delta).clamped(max_speed)
+  _velocity = move_and_slide(_velocity)
+
+  # Rotation
+  var angle : float = atan2(_velocity.y, _velocity.x)
+  rotation = angle
+```
