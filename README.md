@@ -76,3 +76,13 @@ func _physics_process(delta : float) -> void:
   var angle : float = atan2(_velocity.y, _velocity.x)
   rotation = angle
 ```
+
+## Preview
+
+Spaceships leave their home and quickly find the first lot of resources.
+
+![Spaceships leave home](./previews/preview-start-gif.gif)
+
+Spaceships create a stable route to go back and forth from home to resources.
+
+![Spaceships trace route](./previews/preview-end-gif.gif)
