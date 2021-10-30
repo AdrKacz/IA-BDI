@@ -86,3 +86,13 @@ Spaceships leave their home and quickly find the first lot of resources.
 Spaceships create a stable route to go back and forth from home to resources.
 
 ![Spaceships trace route](./previews/preview-end-gif.gif)
+
+### Infinite space issue
+
+Space has no bound and spaceships quickly get lost and never found their home back.
+
+To avoid this problem, we could simulate space boundary and add an edges detection system to spaceship. Another solution is to attract all spaceship to home if they are too far.
+
+These two solutions are artificial and to not translate the real emptiness of space.
+
+A more realistic solution is to ask each spaceship to store its `_desired_direction`'s over time. Thus it can estimate its distance from home, and then revert its `_desired_direction`'s when it's too far.
