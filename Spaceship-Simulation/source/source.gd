@@ -1,4 +1,5 @@
 extends Node2D
+class_name Source
 
 export (float) var radius : float = 128
 
@@ -18,6 +19,3 @@ func get_resource_at_random():
 	resource.global_position = global_position + resource_relative_position
 	
 	return resource
-	
-func _draw():
-	draw_circle(Vector2(), radius, Color(.5, .5, 0, .2))

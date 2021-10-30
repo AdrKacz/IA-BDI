@@ -9,7 +9,6 @@ radius = 16.0
 [node name="Supply" type="RigidBody2D" groups=[
 "supply",
 ]]
-modulate = Color( 0.945098, 0.980392, 0.933333, 1 )
 collision_layer = 4
 collision_mask = 0
 gravity_scale = 0.0

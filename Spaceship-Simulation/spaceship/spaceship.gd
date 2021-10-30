@@ -51,9 +51,11 @@ func handle_pheromone_steering() -> void:
 func _change_state():
 	_is_looking_for_resources = not _is_looking_for_resources
 	if _is_looking_for_resources:
-		$ship_A.modulate = Constants.normal_color
+		$ship_empty.visible = true
+		$ship_full.visible = false
 	else:
-		$ship_A.modulate = Constants.action_color
+		$ship_empty.visible = false
+		$ship_full.visible = true
 	_desired_direction = -transform.x
 
 func handle_target() -> void:
@@ -142,4 +144,4 @@ func _on_PheromoneTimer_timeout() -> void:
 	else:
 		pheromone = resources_pheromone_scene.instance()
 	pheromone.global_position = global_position
-	get_parent().add_child(pheromone)
+	get_parent().get_parent().add_pheromone(pheromone)
