@@ -72,13 +72,12 @@ func handle_target() -> void:
 	else:
 		if _is_looking_for_resources:
 			for body in $Radar.get_overlapping_bodies():
-				if _is_looking_for_resources:
-					if body.has_method('collect_resources') and body.resources > 0:
-						# Start targeting the resource it is within the view angle
-						var angle : float =  transform.x.angle_to((body.position - position).normalized())
-						if deg2rad(-_view_angle / 2) < angle and angle < deg2rad(_view_angle / 2):
-							_target = body
-							_temp = (_target.position - position).normalized()
+				if body.has_method('collect_resources') and body.resources > 0:
+					# Start targeting the resource it is within the view angle
+					var angle : float =  transform.x.angle_to((body.position - position).normalized())
+					if deg2rad(-_view_angle / 2) < angle and angle < deg2rad(_view_angle / 2):
+						_target = body
+						_temp = (_target.position - position).normalized()
 		else:
 			for area in $Radar.get_overlapping_areas():
 				if area.is_in_group('home'):

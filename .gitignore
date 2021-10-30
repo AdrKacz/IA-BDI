@@ -1,3 +1,5 @@
+# Movies
+*.mov
 
 # Godot-specific ignores
 .import/
