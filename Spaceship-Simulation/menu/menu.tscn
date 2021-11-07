@@ -29,7 +29,7 @@ shader_param/alpha = 0.0
 [sub_resource type="ShaderMaterial" id=4]
 shader = ExtResource( 6 )
 shader_param/random_key = 23.45
-shader_param/zoom = 4.0
+shader_param/zoom = 100.0
 shader_param/base_size = 0.12
 shader_param/moving_size = 0.02
 shader_param/frequency = 3.0

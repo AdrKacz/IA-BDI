@@ -13,7 +13,7 @@ Go to [itch - Spaceship Simulation](https://adrkacz.itch.io/spaceship-simulation
 
 *You can write any suggestion you have below the project.*
 
-### I want to edit and run the project
+## I want to edit and run the project
 
 1. Go to [Godot](https://godotengine.org/download) official website and download the engine you need.
 
@@ -26,7 +26,7 @@ git clone https://github.com/AdrKacz/IA-BDI.git
 
 4. To learn more about Godot, go to their superb [documentation](https://docs.godotengine.org/en/stable/).
 
-## The problem
+# The problem
 
 Our home is lost in space and needs to retrieve **resources** around to survive.
 
@@ -42,7 +42,7 @@ Once they leaved their home, pilots have **no idea where they are**, and how to 
 
 *Good luck!*
 
-## Spaceship strategy
+# Spaceship strategy
 
 Spaceship will wander until it finds a target. If it doesn't carry a resource it will look for a **resource** and if it carries a resource it will look for its **home**.
 
@@ -50,13 +50,19 @@ While leaving its home, spaceship will release *blue markers*, to indicate the w
 
 After having found a resource, spaceship will release *red markers*, to indicate where resources are.
 
+*In code, "marker" is replaced with "pheromone". This is so because it mainly takes its influence from pheromone phenomenon in ants [1].*
+
 Spaceship has six sensors in front of it to measure the concentration of markers. Three *blue sensors* are for *blue markers* and three *red sensors* are for *red markers*.
 
 The *blue sensors* and *red sensors* are laid out the same. One to the left at **-45°**, one just in front at **0°**, and one to the right at **+45°**.
 
 Based on the value measured with its sensors, spaceship will change its `_desired_direction`.
 
-`_desired_direction` is the direction spaceship try to move in, the movement with acceleration and steering.
+`_desired_direction` is the direction spaceship try to move in. The direction is controlled by two hyper-parameters  `steer_strength`, and `max_speed`.
+
+The more `steer_strength` is important the more the spaceship can accelerate to reach its `_desired_direction`.
+
+`max_speed` is the velocity maximum of the spaceship.
 
 ```py
 func _physics_process(delta : float) -> void:
@@ -77,7 +83,48 @@ func _physics_process(delta : float) -> void:
   rotation = angle
 ```
 
-## Preview
+## Releasing markers
+
+Just after release, markers are fully visible. Then, they  lose intensity linearly over `evaporation_time` seconds.
+
+```py
+func get_strength() -> float:
+  return max(0, 1 - lifetime / evaporation_time)
+```
+
+## Following markers
+
+To measure sensor value, sensor adds up the strength of each markers in its zone.
+
+```py
+func update_value(look_for_resources) -> void:
+  # Follow the way back (to move back and forth between source and home)
+  _value = 0
+    if look_for_resources:
+      for area in $Resources.get_overlapping_areas():
+        var pheromone := area as Pheromone
+        _value += pheromone.get_strength()
+    else:
+    for are a in $Home.get_overlapping_areas():
+      var pheromone := area as Pheromone
+      _value += pheromone.get_strength()
+
+  _value = min(saturation_value, _value)
+  # Change alpha colour of sensor based on its _value
+  # ...
+```
+
+This value cannot be greater than the `saturation_value` of the sensor.
+
+This hyper-parameter avoid extreme concentration of agent in the same point.
+
+Indeed, if without luck, numerous agents coming from opposites direction gather in the same point, they can start following each other in this exact same point, their sensor value sky rocket.
+
+Thus they cannot escape this trap, cause the marker concentration became too important. Saturation let agent be distracted by other source even if stuck in a loop.
+
+![Spaceships Sensors](./previews/IA-schemas/IA-schemas.001.jpeg)
+
+# Preview
 
 Spaceships leave their home and quickly find the first lot of resources.
 
@@ -87,7 +134,7 @@ Spaceships create a stable route to go back and forth from home to resources.
 
 ![Spaceships trace route](./previews/preview-end-gif.gif)
 
-### Infinite space issue
+# Infinite space issue
 
 Space has no bound and spaceships quickly get lost and never found their home back.
 
