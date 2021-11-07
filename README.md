@@ -121,9 +121,98 @@ This hyper-parameter avoid extreme concentration of agent in the same point.
 
 Indeed, if without luck, numerous agents coming from opposites direction gather in the same point, they can start following each other in this exact same point, their sensor value sky rocket.
 
-Thus they cannot escape this trap, cause the marker concentration became too important. Saturation let agent be distracted by other source even if stuck in a loop.
+Thus, they cannot escape this trap, cause the marker concentration became too important. Saturation let agent be distracted by other source even if stuck in a loop.
 
-![Spaceships Sensors](./previews/IA-schemas/IA-schemas.001.jpeg)
+To determine in which direction the *spaceship* goes, it updates the values of its **3** sensors (depending of its state, the *blue* ones if it's looking for home, the *red* ones if it's looking for resources).
+
+Then it goes either **forward**, **left**, or **right**.
+
+![Spaceships Sensors](./previews/IA-schemas/markers-steering.jpeg)
+
+```py
+func handle_pheromone_steering() -> void:
+  $Sensors/Left.update_value(_is_looking_for_resources)
+  $Sensors/Centre.update_value(_is_looking_for_resources)
+  $Sensors/Right.update_value(_is_looking_for_resources)
+
+  if $Sensors/Centre._value > max($Sensors/Left._value, $Sensors/Right._value):
+  	_desired_direction = transform.x
+  elif $Sensors/Left._value > max($Sensors/Centre._value, $Sensors/Right._value):
+  	_desired_direction = (transform.x - transform.y).normalized()
+  elif $Sensors/Right._value > max($Sensors/Left._value, $Sensors/Centre._value):
+  	_desired_direction = (transform.x + transform.y).normalized()
+```
+
+## Look up for targets
+
+The spaceship looks in front of it and if it finds a *target* of the type it is looking for (either its *home* or *resources*), it moves towards it.
+
+```py
+func _physics_process(delta : float) -> void:
+	handle_target()
+
+	if _target:
+		_desired_direction = (_target.position - position).normalized()
+	else:
+		handle_pheromone_steering()
+		var inside_unit_circle : Vector2 = Vector2(_random.randf_range(-1, 1), _random.randf_range(-1, 1)).clamped(1)
+		_desired_direction = (_desired_direction + inside_unit_circle * wander_strength).normalized()
+
+  # Handle Movement
+  # ...
+```
+
+To find a target, spaceship has a `Radar` defined in `./Spaceship-Simulation/spaceship/spaceship.tscn`.
+
+```py
+# ...
+[sub_resource type="CircleShape2D" id=2]
+radius = 96.0
+# ...
+[node name="Radar" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Radar"]
+visible = false
+shape = SubResource( 2 )
+# ...
+```
+
+The `Radar` detects objects in the near by areas of the *spaceship*. If objects are within the **field of view** of the *spaceship*, they are processed.
+
+The field of view is all the point that are covered by the `Radar` and within a given `_view_angle` range. So, *spaceship* doesn't see what's behind it.
+
+```py
+func handle_target() -> void:
+  if _target:
+  	if position.distance_squared_to(_target.global_position) < _squared_pick_up_radius:
+  		if _is_looking_for_resources and _target.has_method("collect_resources"):
+  			var _resources_collected : int = _target.collect_resources(pick_up_capacity)
+  			_change_state()
+  		else:
+  			if _target.has_method("retrieve_resource"):
+  				_target.retrieve_resource()
+  				_change_state()
+  		_target = null
+  else:
+  	if _is_looking_for_resources:
+  		for body in $Radar.get_overlapping_bodies():
+  			if body.has_method('collect_resources') and body.resources > 0:
+  				# Start targeting the resource it is within the view angle
+  				var angle : float =  transform.x.angle_to((body.position - position).normalized())
+  				if deg2rad(-_view_angle / 2) < angle and angle < deg2rad(_view_angle / 2):
+  					_target = body
+  					_temp = (_target.position - position).normalized()
+  	else:
+  		for area in $Radar.get_overlapping_areas():
+  			if area.is_in_group('home'):
+  				# Start targeting the base it is within the view angle
+  				var angle : float =  transform.x.angle_to((area.position - position).normalized())
+  				if deg2rad(-_view_angle / 2) < angle and angle < deg2rad(_view_angle / 2):
+  					_target = area
+```
+
 
 # Preview
 
