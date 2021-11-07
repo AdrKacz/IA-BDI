@@ -1,5 +1,6 @@
 # IA-BDI, Multi Agent Spaceship
 
+*[@AdrKacz](https://github.com/AdrKacz), [@mbeaufre](https://github.com/mbeaufre), Master Artificial Intelligence Ecole Centrale Lyon - Lyon 1*
 
 This is a 2D-simulation of multiple spaceships travelling through empty space to gather resources.
 
