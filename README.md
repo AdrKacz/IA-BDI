@@ -2,6 +2,8 @@
 
 *[@AdrKacz](https://github.com/AdrKacz), [@mbeaufre](https://github.com/mbeaufre), Master Artificial Intelligence Ecole Centrale Lyon - Lyon 1*
 
+*If you have any questions, please contact use or raise an Issue or a Pull Request*
+
 This is a 2D-simulation of multiple spaceships travelling through empty space to gather resources.
 
 Spaceships are only aware of what is in front of them and can release markers that diffuse in space.
@@ -51,7 +53,7 @@ While leaving its home, spaceship will release *blue markers*, to indicate the w
 
 After having found a resource, spaceship will release *red markers*, to indicate where resources are.
 
-*In code, "marker" is replaced with "pheromone". This is so because it mainly takes its influence from pheromone phenomenon in ants [1].*
+*In code, "marker" is replaced with "pheromone". This is so because it mainly takes its influence from pheromone phenomenon in ants.*
 
 Spaceship has six sensors in front of it to measure the concentration of markers. Three *blue sensors* are for *blue markers* and three *red sensors* are for *red markers*.
 
@@ -214,15 +216,35 @@ func handle_target() -> void:
 ```
 
 
-# Preview
+# Previews
 
-Spaceships leave their home and quickly find the first lot of resources.
+The number in **red** is the number of resource that returns to the base.
+
+When the spaceship is *close* and releases **blue** markers, it doesn't carry resources and it is looking for ressources.
+
+When the spaceship is *open* and releases **red** markers, it carries resources and it is looking for its base.
 
 ![Spaceships leave home](./previews/preview-start-gif.gif)
 
-Spaceships create a stable route to go back and forth from home to resources.
+At first, we observe **blue** markers everywhere. However, they quickly diffuse and first paths appear.
+
+We notice that some spaceships goes in a wrong direction. That is because they don't have any idea where they are. However, thanks to markers, they recover their way to the desired path (*as you can see with the one on the middle right doing kind of a loop*).
+
 
 ![Spaceships trace route](./previews/preview-end-gif.gif)
+
+After a while, we observed a well drawn markers trail, making a total of **3** paths. **2** to go to the left resource batch, and **1** to go the the right resource batch.
+
+We notice that the metrics that displayed the number of resources returning to the base goes up way quicker than at the beginning of the simulation. This prove that spaceships succeeds in creating an efficient group behaviour to gather resources.
+
+
+# Details on graphics
+
+We won't details here how we display information on screen, neither how the computer clock is handle, nor the animation frames are working.
+
+Indeed, *Game Simulation* or *Computer Graphics* are not the subject of the study.
+
+If you play the simulation and you're wondering something is correctly displayed, we will be very happy to answer your questions.
 
 # Infinite space issue
 
