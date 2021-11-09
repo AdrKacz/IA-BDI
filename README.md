@@ -1,14 +1,14 @@
-# IA-BDI, Multi Agent Spaceship
+# IA-BDI, Multi-Agent spaceship
 
 *[@AdrKacz](https://github.com/AdrKacz), [@mbeaufre](https://github.com/mbeaufre), Master Artificial Intelligence Ecole Centrale Lyon - Lyon 1*
 
-*If you have any questions, please contact use or raise an Issue or a Pull Request*
+*If you have any questions, please contact us or raise an Issue or a Pull Request*
 
-This is a 2D-simulation of multiple spaceships travelling through empty space to gather resources.
+This is a 2D simulation of multiple spaceships travelling through space to gather resources.
 
 Spaceships are only aware of what is in front of them and can release markers that diffuse in space.
 
-Resources are gather by lot in space.
+Resources are gathered by lot in space.
 
 ## How to run the simulation
 
@@ -33,13 +33,13 @@ git clone https://github.com/AdrKacz/IA-BDI.git
 
 Our home is lost in space and needs to retrieve **resources** around to survive.
 
-You can release **spaceships** to go look for near by resources.
+You can release **spaceships** to go look for nearby resources.
 
 However, spaceships don't have an efficient radar, and pilots only see what is **not too far and in front** of them.
 
 To help them in their quest, pilots can release **markers** in space while flying. These markers evaporate and **lose visibility over time**.
 
-Once they leaved their home, pilots have **no idea where they are**, and how to find back their home.
+Once they left their home, pilots have **no idea where they are**, and how to find back their home.
 
 **Space is great and dark.**
 
@@ -47,19 +47,19 @@ Once they leaved their home, pilots have **no idea where they are**, and how to 
 
 # Spaceship strategy
 
-Spaceship will wander until it finds a target. If it doesn't carry a resource it will look for a **resource** and if it carries a resource it will look for its **home**.
+The *spaceship* will wander until it finds a target. If it doesn't carry a resource it will look for a **resource** and if it carries a resource it will look for its **home**.
 
-While leaving its home, spaceship will release *blue markers*, to indicate the way back home.
+While leaving its home, the *spaceship* will release *blue markers*, to indicate the way back home.
 
-After having found a resource, spaceship will release *red markers*, to indicate where resources are.
+After having found a resource, the *spaceship* will release *red markers*, to indicate where resources are.
 
-*In code, "marker" is replaced with "pheromone". This is so because it mainly takes its influence from pheromone phenomenon in ants.*
+*In code, "marker" is replaced with "pheromone". This is so because it mainly takes its influence from pheromone phenomenons in ants.*
 
-Spaceship has six sensors in front of it to measure the concentration of markers. Three *blue sensors* are for *blue markers* and three *red sensors* are for *red markers*.
+The *spaceships* has six sensors in front of it to measure the concentration of markers. Three *blue sensors* are for *blue markers* and three *red sensors* are for *red markers*.
 
 The *blue sensors* and *red sensors* are laid out the same. One to the left at **-45°**, one just in front at **0°**, and one to the right at **+45°**.
 
-Based on the value measured with its sensors, spaceship will change its `_desired_direction`.
+Based on the value measured with its sensors, the *spaceship* will change its `_desired_direction`.
 
 `_desired_direction` is the direction spaceship try to move in. The direction is controlled by two hyper-parameters  `steer_strength`, and `max_speed`.
 
@@ -88,7 +88,7 @@ func _physics_process(delta : float) -> void:
 
 ## Releasing markers
 
-Just after release, markers are fully visible. Then, they  lose intensity linearly over `evaporation_time` seconds.
+Just after release, markers are fully visible. Then, they lose intensity linearly over `evaporation_time` seconds.
 
 ```py
 func get_strength() -> float:
@@ -97,7 +97,7 @@ func get_strength() -> float:
 
 ## Following markers
 
-To measure sensor value, sensor adds up the strength of each markers in its zone.
+To measure sensor value, the *sensor* adds up the strength of each marker in its zone.
 
 ```py
 func update_value(look_for_resources) -> void:
@@ -119,13 +119,13 @@ func update_value(look_for_resources) -> void:
 
 This value cannot be greater than the `saturation_value` of the sensor.
 
-This hyper-parameter avoid extreme concentration of agent in the same point.
+This hyper-parameter avoid extreme concentration of agents at the same point.
 
-Indeed, if without luck, numerous agents coming from opposites direction gather in the same point, they can start following each other in this exact same point, their sensor value sky rocket.
+Indeed, if without luck, numerous agents coming from opposite directions gather at the same point, they can start following each other at this same point, their sensor value skyrocket.
 
-Thus, they cannot escape this trap, cause the marker concentration became too important. Saturation let agent be distracted by other source even if stuck in a loop.
+Thus, they cannot escape this trap, cause the marker concentration became too important. Saturation let the *agent* be distracted by other sources even if stuck in a loop.
 
-To determine in which direction the *spaceship* goes, it updates the values of its **3** sensors (depending of its state, the *blue* ones if it's looking for home, the *red* ones if it's looking for resources).
+To determine in which direction the *spaceship* goes, it updates the values of its **3** sensors (depending on its state, the *blue* ones if it's looking for a home, the *red* ones if it's looking for resources).
 
 Then it goes either **forward**, **left**, or **right**.
 
@@ -145,7 +145,7 @@ func handle_pheromone_steering() -> void:
   	_desired_direction = (transform.x + transform.y).normalized()
 ```
 
-## Look up for targets
+## Lookup for targets
 
 The spaceship looks in front of it and if it finds a *target* of the type it is looking for (either its *home* or *resources*), it moves towards it.
 
@@ -181,9 +181,9 @@ shape = SubResource( 2 )
 # ...
 ```
 
-The `Radar` detects objects in the near by areas of the *spaceship*. If objects are within the **field of view** of the *spaceship*, they are processed.
+The `Radar` detects objects in the nearby areas of the *spaceship*. If objects are within the **field of view** of the *spaceship*, they are processed.
 
-The field of view is all the point that are covered by the `Radar` and within a given `_view_angle` range. So, *spaceship* doesn't see what's behind it.
+The field of view is all the points that are covered by the `Radar` and within a given `_view_angle` range. So, *spaceship* doesn't see what's behind it.
 
 ```py
 func handle_target() -> void:
@@ -218,29 +218,29 @@ func handle_target() -> void:
 
 # Previews
 
-The number in **red** is the number of resource that returns to the base.
+The number in **red** is the number of resources that returns to the base.
 
-When the spaceship is *close* and releases **blue** markers, it doesn't carry resources and it is looking for ressources.
+When the spaceship is *close* and releases **blue** markers, it doesn't carry resources and it is looking for resources.
 
 When the spaceship is *open* and releases **red** markers, it carries resources and it is looking for its base.
 
 ![Spaceships leave home](./previews/preview-start-gif.gif)
 
-At first, we observe **blue** markers everywhere. However, they quickly diffuse and first paths appear.
+At first, we observe **blue** markers everywhere. However, they quickly diffuse and paths appear.
 
-We notice that some spaceships goes in a wrong direction. That is because they don't have any idea where they are. However, thanks to markers, they recover their way to the desired path (*as you can see with the one on the middle right doing kind of a loop*).
+We notice that some spaceships go in the wrong direction. That is because they don't have any idea where they are. However, thanks to markers, they recover their way to the desired path (*as you can see with the one on the middle right doing kind of a loop*).
 
 
 ![Spaceships trace route](./previews/preview-end-gif.gif)
 
-After a while, we observed a well drawn markers trail, making a total of **3** paths. **2** to go to the left resource batch, and **1** to go the the right resource batch.
+After a while, we observed a well-drawn markers trail, making a total of **3** paths. **2** to go to the left resource batch, and **1** to go to the right resource batch.
 
-We notice that the metrics that displayed the number of resources returning to the base goes up way quicker than at the beginning of the simulation. This prove that spaceships succeeds in creating an efficient group behaviour to gather resources.
+We notice that the metrics that displayed the number of resources returning to the base goes up way quicker than at the beginning of the simulation. This proves that spaceships succeed in creating an efficient group behaviour to gather resources.
 
 
 # Details on graphics
 
-We won't details here how we display information on screen, neither how the computer clock is handle, nor the animation frames are working.
+We won't detail here how we display information on the screen, neither how the computer clock is handled, nor the animation frames are working.
 
 Indeed, *Game Simulation* or *Computer Graphics* are not the subject of the study.
 
@@ -250,33 +250,33 @@ If you play the simulation and you're wondering something is correctly displayed
 
 Space has no bound and spaceships quickly get lost and never found their home back.
 
-To avoid this problem, we could simulate space boundary and add an edges detection system to spaceship. Another solution is to attract all spaceship to home if they are too far.
+To avoid this problem, we could simulate space boundary and add an edges detection system to the spaceship. Another solution is to attract all spaceships to home if they are too far.
 
-These two solutions are artificial and to not translate the real emptiness of space.
+These two solutions are artificial and do not translate the real emptiness of space.
 
-A more realistic solution is to ask each spaceship to store its `_desired_direction`'s over time. Thus it can estimate its distance from home, and then revert its `_desired_direction`'s when it's too far.
+A more realistic solution is to ask each spaceship to store its `_desired_direction`'s overtime. Thus it can estimate its distance from home, and then revert its `_desired_direction`'s when it's too far.
 
 
 # Conclusions
 
-Working on this topic was extremely fun! We had to simplify the subject at most and find an exiting way to display the information in a way anyone could understand and have fun with.
+Working on this topic was extremely fun! We had to simplify the subject at most and find an exciting way to display the information in a way anyone could understand and have fun with.
 
 We decided to keep from the planet only the aggregation of resources and to display the information using a visual simulation. Indeed, this problem heavily involves movement, and it's easier to catch and see if things are working when you see them.
 
-We had to document ourselves on how ants works to find their way to food and their way back home. We simplify this process and keep only two markers and a small field of view. In reality, ants are able to communicate when a source of food is finished yet, or can recognise their environment to find the most efficient path.
+We had to document ourselves on how ants work to find their way to food and their way back home. We simplify this process and keep only two markers and a small field of view. In reality, ants can communicate when a source of food is soon depleted or can recognise their environment to find the most efficient path.
 
-We were short on time, but we would have love to continue working on this subject a bit longer.
+We were short on time, but we would have loved to continue working on this subject a bit longer.
 
 Here are some potential ameliorations:
 
-1. Add collision detection and avoidance (to go around asteroid for exemple).
+1. Add collision detection and avoidance (*to go around asteroid for example*).
 
 2. Optimise simulation to run with more than **500** spaceships.
 
 3. Have multiple bases, and multiple spaceship teams (maybe some team).
 
-4. Have multiple type of spaceships (*for exemple, spaceships to collect resources and spaceships to attack other spaceships*).
+4. Have multiple types of spaceships (*for example, spaceships to collect resources and spaceships to attack other spaceships*).
 
-5. Implement a Reinforcement Learning Algorithm on spaceship instead of the straight forward *if-else* algorithm implemented.
+5. Implement a Reinforcement Learning Algorithm on spaceships instead of the straightforward *if-else* algorithm implemented.
 
 *If you're interested, we may update this repository in the future.*
