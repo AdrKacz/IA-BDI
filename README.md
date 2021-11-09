@@ -255,3 +255,28 @@ To avoid this problem, we could simulate space boundary and add an edges detecti
 These two solutions are artificial and to not translate the real emptiness of space.
 
 A more realistic solution is to ask each spaceship to store its `_desired_direction`'s over time. Thus it can estimate its distance from home, and then revert its `_desired_direction`'s when it's too far.
+
+
+# Conclusions
+
+Working on this topic was extremely fun! We had to simplify the subject at most and find an exiting way to display the information in a way anyone could understand and have fun with.
+
+We decided to keep from the planet only the aggregation of resources and to display the information using a visual simulation. Indeed, this problem heavily involves movement, and it's easier to catch and see if things are working when you see them.
+
+We had to document ourselves on how ants works to find their way to food and their way back home. We simplify this process and keep only two markers and a small field of view. In reality, ants are able to communicate when a source of food is finished yet, or can recognise their environment to find the most efficient path.
+
+We were short on time, but we would have love to continue working on this subject a bit longer.
+
+Here are some potential ameliorations:
+
+1. Add collision detection and avoidance (to go around asteroid for exemple).
+
+2. Optimise simulation to run with more than **500** spaceships.
+
+3. Have multiple bases, and multiple spaceship teams (maybe some team).
+
+4. Have multiple type of spaceships (*for exemple, spaceships to collect resources and spaceships to attack other spaceships*).
+
+5. Implement a Reinforcement Learning Algorithm on spaceship instead of the straight forward *if-else* algorithm implemented.
+
+*If you're interested, we may update this repository in the future.*
